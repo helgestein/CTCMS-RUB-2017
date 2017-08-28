@@ -336,9 +336,28 @@ vecsum = reduce(lambda x, y : x+y, [1,-1,1,-1])
 
 #example section
 
+#gauss sum explicit formula summe = (n**2+n)/2
+#with for loop
+n = 100
+summe = 0
+for i in range(n+1):
+    summe += i
+
+#via list comprehension
+n=100
+summe = sum([i for i in range(n+1)])
+
+#via reduce
+n = 100
+summe = reduce(lambda x, y : x+y, [i for i in range(n+1)])
+
+
+
 #generate a multinary using generators
 import itertools as it
 import numpy as np
+from functools import reduce
+
 def steps(n):
     for i in range(n+1):
         yield i/n
@@ -349,5 +368,16 @@ def multinary_gen(n=10,inary=3):
         if np.isclose(np.sum(x),1):
             yield x
 
-comps_gen = multinary_gen(n=10,inary=10)
-ternary = [t for t in comps_gen]
+comps_gen = multinary_gen(n=10,inary=3)
+
+#calculate the number of compositions in an inary
+comps_gen = multinary_gen(n=10,inary=3)
+vecsum = reduce(lambda x, y : x+y, comps_gen)
+print(len(vecsum)/3)
+
+#just for fun
+import multiprocessing
+pool = multiprocessing.Pool()
+def f(x):
+    return x**2
+print(pool.map(f, range(10)))
