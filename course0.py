@@ -2,6 +2,8 @@
 #here I will teach you the very basics of python
 #in the course we will be using spyder to make a smooth transition
 #for the people coming from matlab
+#try executing this line by line or block by block and think about what the code is doing
+#play around and start to get creative
 
 #getting help
 help(5)
@@ -14,7 +16,7 @@ a -= 3
 #print them
 print(a)
 
-#strings
+#strings can be added just like numbers
 string = 'Hallo'
 string += ' Welt!'
 
@@ -25,62 +27,82 @@ a = 23
 b = 42
 b, a = a, b
 
-#lists
+#lists are very powerful... they organize numbers as lists!
 
 list = [1,1,2,3,5,8,13,42]
 
-#dicts
+#dicts are kind of like a list but store things not sorted
+#but rather as key-value pairs ... kind of like a dictionary
 mydict = {"Key 1": "Value 1", 2: 3, "pi": 3.14}
 
 print(mydict['pi'])
 print(mydict['Key 1'])
 print(mydict[2])
+#this would create an error because there is no key named 0
 #print(mydict[0])
 
-
+#yoiu can make lists of things other than numbers
 sample = [1, ["another", "list"], ("a", "tuple")]
 mylist = ["List item 1", 2, 3.14]
 mylist[0] = "List item 1 again" # We're changing the item.
 mylist[-1] = 3.21 # Here, we refer to the last item.
 
-#create an empty list or dict
-list = []
-dict = {}
+#create an empty list or dict to add things later
+my_list = []
+my_dict = {}
 
 #add entries to the empty list
-list.append(1)
-#you can even append a list to a list ...
-list.append(['a','b'])
-list.append(['a1','b1'])
-#now list contains two lists
-print(list)
-#only print the first list
-print(list[1][0])
-print(list[1])
+my_list.append(1)
 
+#you can even append a list to a list ...
+my_list.append(['a','b'])
+my_list.append(['a1','b1'])
+
+#now list contains two lists
+print(my_list)
+
+#only print the first list
+print(my_list[1][0])
+print(my_list[1])
+
+#the best library is numpy for anythign with numbers ...
 import numpy as np
 
+#is this ma matrix?
 data = np.array([[1, 1.1, 1.2],
                  [2.1, 2.1, 2.6],
                  [1.2, 5.2, 8.44],
                  [5.6, 7.4, 5.45],
                  [3.8, 3.8, 2.32]])
 print(data)
+#you can print slices through a matrix!!
 print(data[:,1])
 print(data[1,:])
 
+#sometimes you need to print things in a formatted way
 print("X: %s mm Y: %s mm Z: %s mm" % (42, 23, 0.01))
 print("X: {} mm Y: {} mm Z: {} mm".format(42, 23, 0.01))
 
 print("This %(verb)s a %(noun)s." % {"noun": "test", "verb": "is"})
 
-#a little bit of randomness
+#a little bit of randomness is sometimes good
 from random import randint as zufallsInt
 zufallsZahl = zufallsInt(1,5000)
 print(zufallsZahl)
 
+
+
+#looping in python works like this
+#you loop with something over an iteratable
+for a in [1,2,3,4]:
+  print(a)
+
+ #range essentially gives an iterable to do something 10 times ... starts at 0!!
+
 rangelist = range(10)
 print(rangelist)
+
+#a more complex example:
 for number in rangelist:
     # Check if number is one of
     # the numbers in the tuple.
@@ -94,14 +116,14 @@ for number in rangelist:
         # as it's the last statement of the loop.
         continue
 
-
+#do you understand this?
 
 if rangelist[1] == 2:
     print("The second item (lists are 0-based) is 2")
 else:
     pass
 
-#list comprehensions
+#list comprehensions ... powerfull shorthand stuff
 
 erster = [1,2,3,4,5]
 zweiter = [10, 100, 1000, 10000, 100000]
@@ -109,6 +131,7 @@ listComprehension = [x*y for x in erster for y in zweiter]
 print(listComprehension)
 len(listComprehension)
 
+#here is a complicated example that I use very often
 #generate a ternary
 import itertools as it
 n=10
@@ -117,11 +140,21 @@ el = np.array([i/n for i in range(n+1)])
 _comps = np.array([x for x in it.product(el, repeat=inary) if np.isclose(np.sum(x),1)])
 _comps
 
-#las a function
+#as a function this can be reused very easily
+#you can sepify default values by setting them to a number or anything else
+default = 3
+def myFunc(x,y=default):
+  z = x+y
+  return z
+
+#or even do complex stuff:
 def genComp(n=20,inary=4):
     el = np.array([i/n for i in range(n+1)])
     _comps = np.array([x for x in it.product(el, repeat=inary) if np.isclose(np.sum(x),1)])
 
+xy = genComp(n=10,inary=3)
+
+#try to understand this line:
 sum([1 for i in [6, 5, 4, 4, 9] if i == 4])
 
 #bad programming
@@ -148,6 +181,7 @@ def crazyFunc2(a, b, addOne=False, additor=0):
 z = crazyFunc(3,2,addOne=True,additor=1)
 print(z)
 
+#try running this code
 
 def fehlerfehler():
     try:
@@ -164,6 +198,8 @@ def fehlerfehler():
 
 fehlerfehler()
 
+#objects are powerful things that can store values and functions and be initialized
+#don't need to understand this for now 100%
 class meineKlasse(object):
     allgeminErreichbar = 10
     def __init__(self):
@@ -171,9 +207,7 @@ class meineKlasse(object):
     def meineFunktioninMeinerKlasse(self, arg1, arg2):
         return self.meineVariable
 
-#achtung was der scope ist!!!!
-
-
+#There is one strangeness (and others) in python regarding scope ...
 def ändertNix():
     # This will correctly change the global.
     x = 3
@@ -189,14 +223,23 @@ print(x)
 ändert()
 print(x)
 
+#same thing like this:
+a = 3
+b = 2
+c = a+b
+print(c)
+b=8
+print(c)#whatt??
+
+#finally ploting
 import matplotlib.pyplot as plt
 plt.plot([1,2,3,4], [1,4,9,16], 'ro')
 plt.axis([0, 6, 0, 20])
 plt.ylabel('Y LABEL')
 plt.xlabel('xxx')
-
 plt.show()
 
+#ok now you ahave come this far and can run some really complicated stuff ... use it to play around a bit!
 
 import numpy as np
 import matplotlib.pyplot as plt
